@@ -4,4 +4,9 @@ module.exports = (app) => {
     // Create an order
     app.post('/orders', orders.create);
 
+    // Retrieve all orders
+    app.get('/orders', orders.findAll);
+
+
+
 }

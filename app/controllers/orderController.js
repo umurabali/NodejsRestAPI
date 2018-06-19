@@ -26,4 +26,15 @@ exports.create = (req, res) => {
     });
 };
 
+//Retrieve all orders from database
+exports.findAll = (req, res) => {
+    Order.find()
+        .then(orders => {
+            res.send(orders);
+        }).catch(err => {
+        res.status(500).send({
+            message: err.message || "Error occurred while retrieving the order."
+        });
+    });
+};
 
