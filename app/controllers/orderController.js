@@ -64,10 +64,28 @@ exports.update = (req, res) => {
                 message: "Order not found with id " + req.params.order_Id
             });
         }
-
     });
-
 };
+
+// Delete a note with the specified noteId in the request
+exports.delete = (req, res) => {
+    Order.findByIdAndRemove(req.params.order_Id)
+        .then(order => {
+            if(!order) {
+                return res.status(404).send({
+                    message: "Order not found with id " + req.params.order_Id
+                });
+            }
+            res.send({message: "Order deleted successfully!"});
+        }).catch(err => {
+        if(err.kind === 'ObjectId' || err.name === 'NotFound') {
+            return res.status(404).send({
+                message: "Order not found with id " + req.params.order_Id
+            });
+        }
+    });
+};
+
 
 
 
