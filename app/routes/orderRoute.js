@@ -5,7 +5,10 @@ module.exports = (app) => {
     app.post('/orders', orders.create);
 
     // Retrieve all orders
-    app.get('/orders', orders.findAll);
+    app.get('/orders', orders.read);
+
+    // Update a Note with noteId
+    app.put('/orders/:order_Id', orders.update);
 
 
 

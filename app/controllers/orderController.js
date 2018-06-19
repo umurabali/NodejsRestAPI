@@ -27,7 +27,7 @@ exports.create = (req, res) => {
 };
 
 //Retrieve all orders from database
-exports.findAll = (req, res) => {
+exports.read = (req, res) => {
     Order.find()
         .then(orders => {
             res.send(orders);
@@ -37,4 +37,39 @@ exports.findAll = (req, res) => {
         });
     });
 };
+
+// Update a note identified by the noteId in the request
+exports.update = (req, res) => {
+    // Validate Request
+
+    // Find note and update it with the request body
+    Order.findByIdAndUpdate(req.params.order_Id, {
+        orderId: req.body.orderId,
+        companyName: req.body.companyName,
+        customerAddress: req.body.customerAddress,
+        orderedItem: req.body.orderedItem,
+        orderCost: req.body.orderCost,
+        orderDate: req.body.orderDate
+    }, {new: true})   // (new: true) means use the modified version
+        .then(order => {
+            if(!order) {
+                return res.status(404).send({
+                    message: "Order not found with id " + req.params.order_Id
+                });
+            }
+            res.send(order);
+        }).catch(err => {
+        if(err.kind === 'ObjectId') {
+            return res.status(404).send({
+                message: "Order not found with id " + req.params.order_Id
+            });
+        }
+
+    });
+
+};
+
+
+
+
 
